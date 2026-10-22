@@ -1,53 +1,86 @@
-# 你好，我是 zzw200498-hue 👋
+# 你好，我是邹志伟 👋
 
-嵌入式方向学习者：**C 语言 → STM32 单片机 → 嵌入式 Linux 应用开发**，正在把学习路线一步步落成可运行的项目。
+嵌入式开发 · C 语言 · STM32 · 嵌入式 Linux
 
-## 🗺️ 学习路线图
-
-```
- 2026.07        2026 寒假~春节         2026.07~08         2026.08~10        2026.10
-   │               │                     │                  │                │
-   ▼               ▼                     ▼                  ▼                ▼
-┌─────────┐   ┌──────────────┐    ┌──────────────┐   ┌──────────────┐  ┌──────────────┐
-│ C 语言   │   │ STM32 单片机  │    │  Linux 基础   │   │ Linux 应用层  │  │   综合实战    │
-│ 深度复习 │──▶│ 江协科技教程  │───▶│  黑马入门课程  │──▶│ 尚硅谷系统课程│─▶│  IoT 温控风扇 │
-│ 648集课程│   │ 24个练习工程  │    │  命令/权限/运维│   │ 进程/线程/网络│  │  固件+服务端  │
-└─────────┘   └──────────────┘    └──────────────┘   └──────────────┘  └──────────────┘
-```
-
-## 📦 仓库导航
-
-### 🎓 学习过程
-
-| 仓库 | 内容 |
-|---|---|
-| [Snake-C](https://github.com/ZZW200498-HUE/Snake-C) | C 语言复习成果：控制台原始版 → 控制台优化版 → Win32 图形版贪吃蛇 |
-| [STM32-Learning-Notes](https://github.com/ZZW200498-HUE/STM32-Learning-Notes) | STM32 学习笔记：江协科技教程跟学，24 个练习工程（GPIO→中断→定时器→ADC→DMA→串口→看门狗）+ 结课作品 |
-| [embedded-linux-notes](https://github.com/ZZW200498-HUE/embedded-linux-notes) | 嵌入式 Linux 笔记：Linux 基础命令速查 + 尚硅谷应用层开发全 7 章（文件IO/进程/线程/Socket/守护进程/多路复用） |
-
-### 🔧 项目实战
-
-| 仓库 | 内容 |
-|---|---|
-| [stm32-esp8266-iot-gateway](https://github.com/ZZW200498-HUE/stm32-esp8266-iot-gateway) ⭐ | **温控风扇 IoT 系统（固件 + 服务端一体仓库）**：STM32 采集温湿度、OLED 显示、PWM 风扇调速，ESP8266 上报 Linux 服务器并可远程反控；含完整开发报告、BOM、原理图、7 条踩坑记录 |
-| [fan-iot-server](https://github.com/ZZW200498-HUE/fan-iot-server) | IoT 系统 Linux 服务端（独立仓库）：epoll TCP + 生产者消费者线程模型 + SQLite + HTTP 监控台 |
-| [STM32-Smart-Fan](https://github.com/ZZW200498-HUE/STM32-Smart-Fan) | STM32 结课作品：智能温控风扇（高温自动报警） |
-| [linux-c-quiz](https://github.com/ZZW200498-HUE/linux-c-quiz) | VSCode 插件：C 语言 / Linux 题库练习（YAML 题库，学习中巩固用） |
-
-## 🛠️ 技能栈
-
-![C](https://img.shields.io/badge/C-熟练-blue?logo=c&logoColor=white)
-![STM32](https://img.shields.io/badge/STM32-标准库开发-green?logo=stmicroelectronics&logoColor=white)
-![Linux](https://img.shields.io/badge/Linux-应用编程-yellow?logo=linux&logoColor=white)
-![网络编程](https://img.shields.io/badge/TCP_IP-Socket-orange)
-![多线程](https://img.shields.io/badge/pthread-线程同步-red)
-![SQLite](https://img.shields.io/badge/SQLite-数据库-lightgrey?logo=sqlite&logoColor=white)
-![epoll](https://img.shields.io/badge/IO多路复用-epoll-9cf)
-![Git](https://img.shields.io/badge/Git-版本管理-orange?logo=git&logoColor=white)
+从单片机做到 Linux 服务端，独立完成过一个完整的 IoT 数据链路：
+**传感器采集 → 无线上报 → 服务端落库 → Web 监控**。
 
 ---
 
-<!--
-学习主线：C（2026.07 复习，Snake-C）→ STM32（寒假，江协科技，学至看门狗）→
-Linux 基础（7-8月，黑马）→ Linux 应用层（8-10月，尚硅谷）→ IoT 综合项目（10月）
--->
+## 代表项目
+
+### 1. 温控风扇 IoT 系统（设备端 + 服务端，全链路独立完成）
+
+一套自己从头写到尾的系统，不是教程复刻。
+
+**设备端** — [stm32-esp8266-iot-gateway](https://github.com/zzw200498-hue/stm32-esp8266-iot-gateway)
+- STM32F103 + 标准库裸机开发，DHT11 采集温湿度、OLED 显示、PWM 无级调速、旋转编码器手动控速
+- ESP8266（AT 指令）WiFi 上报，TCP 长连接 + 心跳保活，断线由服务端感知
+- 含开发报告、BOM、原理图、7 条踩坑记录
+
+**服务端** — [fan-iot-server](https://github.com/zzw200498-hue/fan-iot-server)
+- Linux C 手写，不依赖任何网络框架
+- `epoll` 非阻塞 IO，自行处理 TCP 粘包切分
+- 网络线程 / 工作线程分离，互斥锁 + 条件变量实现有界消息队列（满则丢包，保护网络线程不被阻塞）
+- SQLite 持久化：每线程独立连接 + WAL 模式 + busy_timeout
+- HTTP 接口提供历史查询与远程控制，浏览器直接打开监控台
+- 信号驱动的优雅退出（SIGINT/SIGTERM），按 HTTP → 队列 → worker → 数据库 反序关停
+
+**结果**：控温误差 ≤ ±1.0℃，连续运行 24 小时无异常。
+
+---
+
+### 2. STM32 智能温控风扇 — [STM32-Smart-Fan](https://github.com/zzw200498-hue/STM32-Smart-Fan)
+
+自动 / 手动双模式闭环控温。高于 25℃ 线性调速，低于 20℃ 切编码器手动控制（4 级步进）；
+PWM 频率锁定 25kHz 彻底消除电机啸叫；TIM2 中断驱动蜂鸣器高温报警 + 双色 LED 三级温度指示。
+
+---
+
+### 3. Snake-C — [Snake-C](https://github.com/zzw200498-hue/Snake-C)
+
+C 语言工程能力递进演示：控制台原始版 → 控制台优化版 → Win32 图形版。
+同一份游戏逻辑的三次重构，能看到代码是怎么从「能跑」变成「好维护」的。
+
+---
+
+### 4. linux-c-quiz — [linux-c-quiz](https://github.com/zzw200498-hue/linux-c-quiz)
+
+VSCode 插件：C 语言 / Linux 知识点刷题工具。YAML 维护题库，TypeScript 开发，MIT 协议。
+
+---
+
+## 技术栈
+
+| 方向 | 内容 |
+|---|---|
+| 语言 | C（熟练）、TypeScript、Shell |
+| 单片机 | STM32F103 标准库开发，GPIO / 中断 / 定时器 / PWM / ADC / DMA / I2C / SPI / USART / 看门狗 |
+| 嵌入式 Linux | 文件 IO、进程与 IPC、多线程与同步（pthread / 互斥锁 / 条件变量）、Socket 网络编程、epoll 多路复用、守护进程 |
+| 存储 | SQLite（预处理语句、WAL、多线程连接管理） |
+| 工具链 | GCC / GDB / Makefile / Git / Keil MDK / STM32CubeMX / OpenOCD |
+| 硬件调试 | 万用表、示波器、逻辑分析仪，能独立读原理图与英文数据手册 |
+
+---
+
+## 学习轨迹
+
+```
+2026.07           2026.07-08          2026.08-10          2026.10
+   │                  │                   │                  │
+   ▼                  ▼                   ▼                  ▼
+┌────────┐      ┌────────────┐     ┌────────────┐     ┌──────────────┐
+│ C 语言  │─────▶│  STM32     │────▶│ Linux 应用 │────▶│ IoT 综合实战  │
+│ 系统复习│      │ 全外设开发  │     │ 系统编程   │     │ 固件+服务端   │
+└────────┘      └────────────┘     └────────────┘     └──────────────┘
+```
+
+过程中沉淀的 31 个外设练习工程与 Linux 学习笔记，保留在私有仓库，不占用公开列表。
+
+---
+
+## 联系
+
+- 目标岗位：嵌入式 Linux 应用开发 / 嵌入式软件开发
+- 状态：2027 届本科应届，可实习
+- 交流：欢迎在本仓库提 Issue
